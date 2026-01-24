@@ -29,12 +29,12 @@ jobs :
             
             - name: Run Snyk to check for vulnerabilities
               uses: snyk/actions/iac@master
-              env:
-                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
                 command: test
                 file: sql/
                 args: --org=${{ secrets.SNYK_ORG_ID}}
+              env:
+                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
             - name: Run Flyway Migrations
               run: |
