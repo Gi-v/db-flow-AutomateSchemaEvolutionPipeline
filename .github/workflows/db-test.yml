@@ -30,8 +30,8 @@ jobs :
             - name: Run Snyk to check for vulnerabilities
               uses: snyk/actions/iac@master
               with:
-                command: test
                 file: sql/
+                command: test
                 args: --org=${{ secrets.SNYK_ORG_ID}} -d
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
