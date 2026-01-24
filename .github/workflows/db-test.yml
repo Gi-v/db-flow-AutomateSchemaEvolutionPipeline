@@ -32,7 +32,9 @@ jobs :
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
+                command: test
                 file: sql/
+                args: --org=${{ secrets.SNYK_ORG_ID}}
 
             - name: Run Flyway Migrations
               run: |
