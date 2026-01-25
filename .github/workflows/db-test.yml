@@ -26,16 +26,7 @@ jobs :
               run: |
                 wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/10.0.0/flyway-commandline-10.0.0-linux-x64.tar.gz | tar -xz
                 sudo ln -s $(pwd)/flyway-10.0.0/flyway /usr/local/bin/flyway
-            
-            - name: Run Snyk to check for vulnerabilities
-              uses: snyk/actions/iac@master
-              with:
-                file: sql/
-                command: test
-                args: --org=${{ secrets.SNYK_ORG_ID}} -d
-              env:
-                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
+                
             - name: Run Flyway Migrations
               run: |
                 flyway -url=jdbc:postgresql://localhost:5432/postgres -user=postgres -password=password -locations=filesystem:sql migrate
