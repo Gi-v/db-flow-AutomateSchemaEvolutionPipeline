@@ -1,0 +1,50 @@
+name: CI - Migrations + Frontend Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: dbflow
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Install Flyway CLI
+        run: |
+          wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/10.0.0/flyway-commandline-10.0.0-linux-x64.tar.gz | tar -xz
+          sudo ln -sf $(pwd)/flyway-10.0.0/flyway /usr/local/bin/flyway
+
+      - name: Run Flyway migrations (MySQL)
+        env:
+          FLYWAY_PASSWORD: password
+        run: |
+          flyway -url=jdbc:mysql://localhost:3306/dbflow -user=root -password=${FLYWAY_PASSWORD} -locations=filesystem:sql/mysql migrate
+
+      - name: Typecheck and unit tests
+        run: |
+          npm run typecheck
+          npm run test

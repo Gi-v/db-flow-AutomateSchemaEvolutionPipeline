@@ -39,7 +39,6 @@ export default function PipelineEditor() {
     setRunning(true)
     try {
       const run = await runPipeline(id ?? 'new', { env: 'dev', mode: 'dry-run' })
-      // open run logs page
       navigate(`/runs/${run.id}`)
     } catch (err) {
       alert('Failed to start run')
