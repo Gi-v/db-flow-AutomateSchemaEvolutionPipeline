@@ -29,7 +29,7 @@
     "jsdom": "^22.0.0",
     "postcss": "^8.4.32",
     "prettier": "^3.5.0",
-    "tailwindcss": "^4.3.1",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.4.2",
     "vite": "^7.3.1",
     "vitest": "^1.4.0"
