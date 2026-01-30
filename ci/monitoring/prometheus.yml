@@ -1,0 +1,14 @@
+# Prometheus configuration for Mini DBMS monitoring
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Mini DBMS metrics
+  - job_name: 'mini-dbms'
+    static_configs:
+      - targets: ['mini-dbms:8080']
+    metrics_path: '/metrics'
+    
+  # Add more scrape configs as needed

@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+docs/
+
+# Tests
+tests/
+*_test.go
+
+# Build artifacts
+bin/
+build/
+coverage/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Dependencies (will be downloaded in container)
+vendor/
+
+# Node.js (from old frontend)
+node_modules/
+dist/
+package.json
+package-lock.json
+yarn.lock
+tsconfig.json
+vite.config.ts
+tailwind.config.cjs
+postcss.config.cjs
+index.html
+
+# Other
+.env
+.env.local
+.DS_Store
+*.exe
+*.test
+*.out

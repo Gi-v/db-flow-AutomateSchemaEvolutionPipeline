@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  # Mini Relational DBMS Service
+  mini-dbms:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      - LOG_LEVEL=info
+    restart: unless-stopped
+
+  # MySQL database (for development/testing)
   db:
     image: mysql:8.0
     environment:
@@ -15,11 +27,12 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
+  # Database admin interface
   adminer:
     image: adminer:latest
     restart: always
     ports:
-      - '8080:8080'
+      - '8081:8080'
 
 volumes:
   db-data:

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: mini-dbms
+description: A Helm chart for Mini Relational DBMS
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+maintainers:
+  - name: db-flow-team
