@@ -5,3 +5,20 @@
 .env
 .env.local
 .DS_Store
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+go.work
+coverage.txt
+coverage.html
+
+# Build artifacts
+/bin/
+/build/
