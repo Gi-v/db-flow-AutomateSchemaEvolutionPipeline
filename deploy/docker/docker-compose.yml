@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  minidb:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: minidb
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    volumes:
+      - minidb-data:/data
+    networks:
+      - minidb-network
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: minidb-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - minidb-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: minidb-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../monitoring/grafana-dashboard.json:/etc/grafana/provisioning/dashboards/minidb.json
+    networks:
+      - minidb-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  minidb-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  minidb-network:
+    driver: bridge
