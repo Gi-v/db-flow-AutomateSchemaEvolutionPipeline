@@ -1,3 +1,4 @@
+# Node.js (frontend)
 /node_modules
 /dist
 /.idea
@@ -5,3 +6,46 @@
 .env
 .env.local
 .DS_Store
+
+# Go
+minidb
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.out
+coverage.html
+go.sum
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+/bin/
+/pkg/
+/vendor/
+
+# Temporary files
+/tmp/
+*.tmp
+*.log
+
+# Docker
+.dockerignore
+
+# Database
+*.db
+data/
+*.sqlite
+*.sqlite3
