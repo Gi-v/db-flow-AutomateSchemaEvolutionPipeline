@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mini-dbms-config
+  labels:
+    app: mini-dbms
+data:
+  LOG_LEVEL: "info"
+  # Add more configuration as needed

@@ -1,17 +1,14 @@
 # Build stage
 FROM golang:1.21-alpine AS builder
 
-# Install build dependencies
-RUN apk add --no-cache git make
-
 # Set working directory
 WORKDIR /app
 
 # Copy go mod files
-COPY go.mod go.sum ./
+COPY go.mod ./
 
-# Download dependencies
-RUN go mod download
+# Download dependencies (if any)
+RUN go mod download || true
 
 # Copy source code
 COPY src/ ./src/
@@ -19,11 +16,8 @@ COPY src/ ./src/
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o dbms ./src/main.go
 
-# Runtime stage
-FROM alpine:latest
-
-# Install ca-certificates for HTTPS
-RUN apk --no-cache add ca-certificates
+# Runtime stage - use scratch for minimal image
+FROM alpine:3.18
 
 WORKDIR /root/
 
